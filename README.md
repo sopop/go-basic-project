@@ -15,3 +15,6 @@
 
 # 用到的库：
 # github.com/joho/godotenv
+
+# Dockerfile文件docker打包时用到
+
