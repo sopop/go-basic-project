@@ -1,0 +1,78 @@
+{{define "home/index.html"}}
+{{/*标记页面名称、位置*/}}
+{{/* 引入头部 */}}
+{{ template "header" . }}
+
+<body>
+    <div class="content" id="app">
+        <div>{{.result.name}}</div>
+        <div id="refsh" style="display: none;color: red;">
+            <div>更新成功点击刷新</div>
+            <button @click="refsh">刷新</button>
+        </div>
+        <button @click="creatDB" id="db">点击创建数据库</button>
+    </div>
+</body>
+<script src="/static/js/axios.min.js">
+</script>
+<script src="/static/js/sweetalert2.min.js">
+</script>
+<link rel="stylesheet" type="text/css" href="/static/css/sweetalert2.min.css">
+<script>
+const { createApp, reactive, toRefs } = Vue;
+
+const EventHandle = {
+    // 解决与go变量渲染冲突
+    compilerOptions: {
+        delimiters: ['${', '}'],
+        comments: true
+    },
+    setup() {
+        const globalData = reactive({
+            lists: []
+        });
+
+        function creatDB() {
+            let that = this;
+
+            axios({
+                url: '/api/create_mysql',
+                method: 'post',
+                data: {},
+                headers: {
+                    'ApiToken': 'demo_token',
+                    'Content-Type': 'application/json; charset=UTF-8',
+                },
+            }).then(function(response) {
+                console.log(response)
+                if (response.data.code == 0) {
+                    document.getElementById('db').style.display = 'none';
+                    document.getElementById('refsh').style.display = 'block';
+                    Swal.fire({
+                        title: 'success',
+                        icon: 'success',
+                        timer: 2000,
+                    })
+                }
+
+            }).catch(function(error) {
+                console.log(error);
+            });
+        }
+
+        function refsh() {
+            window.location.reload();
+        }
+        return {
+            ...toRefs(globalData),
+            creatDB,
+            refsh
+        }
+    }
+}
+
+const app = createApp(EventHandle);
+app.mount("#app");
+</script>
+{{ template "footer" . }}
+{{end}}

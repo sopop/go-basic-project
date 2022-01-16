@@ -1,0 +1,21 @@
+{{define "home/index.html"}}
+{{/*标记页面名称、位置*/}}
+{{/* 引入头部 */}}
+{{ template "header" . }}
+<body>
+    <div class="content">
+        <div>{{.result.name}}</div>
+        <div>
+            多层目录模板这里必须定义"home/index.html"，否则报错：<br>
+            html/template: "home/index.html" is undefined
+        </div>
+        <div>{{.content}}</div>
+        <a href="/goods.html">点击跳到商品页</a>
+    </div>
+</body>
+
+{{/* 引入脚部 */}}
+{{ template "footer" . }}
+
+{{end}}
+

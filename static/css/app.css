@@ -1,0 +1,79 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+button {
+    width: 200px;
+    padding: 8px;
+    background-color: #428bca;
+    border-color: #357ebd;
+    color: #fff;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    /* future proofing */
+    -khtml-border-radius: 10px;
+    /* for old Konqueror browsers */
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid transparent;
+    font-weight: 900;
+    font-size: 125%
+}
+
+.goods button {
+    width: 90px;
+    padding: 2px;
+    background-color: #428bca;
+    border-color: #357ebd;
+    color: #fff;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    /* future proofing */
+    -khtml-border-radius: 10px;
+    /* for old Konqueror browsers */
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid transparent;
+    font-weight: 300;
+    font-size: 16px;
+    margin: 5px;
+}
+
+
+a {
+    font-size: 16px;
+    display: block;
+    width: 130px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    border: 1px solid #000;
+}
+
+a:link {
+    color: blue;
+    text-decoration: none;
+}
+
+/*未访问：蓝色、无下划线*/
+
+a:active: {
+    color: red;
+}
+
+/*激活：红色*/
+
+a:visited {
+    color: purple;
+    text-decoration: none;
+}
+
+/*已访问：purple、无下划线*/
+
+a:hover {
+    color: red;
+    text-decoration: underline;
+}
