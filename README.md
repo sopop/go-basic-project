@@ -7,6 +7,8 @@
 #### 这里前端用了vue，由于更直观的展示Go的应用，没用使用npm没有前后端分离，建议开发项目使用npm引入vue
 
 #### 设置数据库参数在config中的database文件中
+#### 运行项目，在项目根目录执行以下命令
+go run main.go
 #### 访问：http://localhost:8089/
 
 #### 国内仓库设置：https://goproxy.io/zh/
