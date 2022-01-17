@@ -11,6 +11,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+var swagHandler gin.HandlerFunc
+
 func Strat() *gin.Engine {
 	route := gin.Default()
 	// 开发模式
@@ -23,6 +25,11 @@ func Strat() *gin.Engine {
 
 	// 中间件验证apiToken
 	route.Use(middleware.Token())
+
+	// 开启swag
+	if swagHandler != nil && conf["debug"] != "false" {
+		route.GET("/swagger/*any", swagHandler)
+	}
 	// 注册模板
 	route.LoadHTMLGlob("view/**/*")
 

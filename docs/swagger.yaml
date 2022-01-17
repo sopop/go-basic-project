@@ -1,0 +1,220 @@
+definitions:
+  model.Goods:
+    properties:
+      cat_id:
+        description: 分类ID
+        type: integer
+      create_time:
+        description: 创建时间
+        type: integer
+      create_time_str:
+        description: 创建时间格式化
+        type: string
+      detail:
+        description: 商品描述
+        type: string
+      id:
+        description: 商品ID
+        type: integer
+      name:
+        description: 商品名称
+        type: string
+      status:
+        description: 状态
+        type: integer
+      update_time:
+        description: 更新时间
+        type: integer
+    type: object
+  service.Response:
+    properties:
+      code:
+        description: 为0时表示成功
+        type: integer
+      data: {}
+      msg:
+        type: string
+    type: object
+  service.ResponseError:
+    properties:
+      code:
+        type: integer
+      msg:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /:
+    get:
+      consumes:
+      - text/plain
+      description: 首页
+      produces:
+      - text/html
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/service.ResponseError'
+      summary: 首页
+  /api/goods_del:
+    post:
+      consumes:
+      - application/json
+      description: 删除商品信息
+      parameters:
+      - description: apitoken验证
+        in: header
+        name: ApiToken
+        required: true
+        type: string
+      - description: 商品ID
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/service.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/service.ResponseError'
+      summary: 删除商品
+  /api/goods_detail:
+    post:
+      consumes:
+      - application/json
+      description: 获取商品信息
+      parameters:
+      - description: apitoken验证
+        in: header
+        name: ApiToken
+        required: true
+        type: string
+      - description: 商品ID
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/service.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.Goods'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/service.ResponseError'
+      summary: 商品详情
+  /api/goods_lists:
+    get:
+      consumes:
+      - text/plain
+      description: 展示商品
+      produces:
+      - text/html
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/service.ResponseError'
+      summary: 商品页
+    post:
+      consumes:
+      - application/json
+      description: 获取商品列表
+      parameters:
+      - description: apitoken验证
+        in: header
+        name: ApiToken
+        required: true
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        required: true
+        type: string
+      - description: 每页条数
+        in: query
+        name: pageSize
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/service.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.Goods'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/service.ResponseError'
+      summary: 商品列表
+  /api/goods_operate:
+    post:
+      consumes:
+      - application/json
+      description: 添加、编辑商品信息
+      parameters:
+      - description: apitoken验证
+        in: header
+        name: ApiToken
+        required: true
+        type: string
+      - description: 商品ID
+        in: query
+        name: id
+        required: true
+        type: string
+      - description: 商品名称
+        in: query
+        name: name
+        required: true
+        type: string
+      - description: 商品描述
+        in: query
+        name: detail
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/service.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/service.ResponseError'
+      summary: 添加、编辑商品
+swagger: "2.0"

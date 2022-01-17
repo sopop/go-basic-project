@@ -7,6 +7,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @Summary 首页
+// @Description 首页
+// @Accept  plain
+// @Produce  html
+// @Success 200 {object} map[string]interface{}
+// @Failure 500 {object} service.ResponseError
+// @Router / [get]
 func Index(c *gin.Context) {
 	data := map[string]interface{}{
 		"name":    "测试项目",

@@ -8,6 +8,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @Summary 商品页
+// @Description 展示商品
+// @Accept  plain
+// @Produce  html
+// @Success 200 {object} map[string]interface{}
+// @Failure 500 {object} service.ResponseError
+// @Router /api/goods_lists [get]
 func Goods(c *gin.Context) {
 	data := map[string]interface{}{
 		"name":  "《go语言开发》",
@@ -20,27 +27,85 @@ func Goods(c *gin.Context) {
 	})
 }
 
+// @Summary 商品列表
+// @Description 获取商品列表
+// @Accept  json
+// @Produce  json
+// @param ApiToken header string true "apitoken验证"
+// @Param  page query string true "页码"
+// @Param  pageSize query string true "每页条数"
+// @Success 200 {object} service.Response{data=model.Goods}
+// @Failure 500 {object} service.ResponseError
+// @Router /api/goods_lists [post]
 func GoodsLists(c *gin.Context) {
+	var (
+		code int
+		msg  string
+		err  error
+	)
 	page, _ := strconv.Atoi(c.PostForm("page"))
 	size, _ := strconv.Atoi(c.PostForm("pageSize"))
 	data := service.RequestInfo{
 		Page:     page,
 		PageSize: size,
 	}
-	lists, _ := service.NewGoods().GetLists(data)
+	lists, err := service.NewGoods().GetLists(data)
+	if err != nil {
+		code = 1
+		msg = "提交失败"
+	} else {
+		code = 0
+		msg = "提交成功"
+	}
 	c.JSON(http.StatusOK, gin.H{
+		"code":  code,
+		"msg":   msg,
 		"lists": lists,
 	})
 }
 
+// @Summary 商品详情
+// @Description 获取商品信息
+// @Accept  json
+// @Produce  json
+// @param ApiToken header string true "apitoken验证"
+// @Param  id query string true "商品ID"
+// @Success 200 {object} service.Response{data=model.Goods}
+// @Failure 500 {object} service.ResponseError
+// @Router /api/goods_detail [post]
 func GoodsDetail(c *gin.Context) {
+	var (
+		code int
+		msg  string
+		err  error
+	)
 	id, _ := strconv.Atoi(c.PostForm("id"))
-	goods, _ := service.NewGoods().GetDetail(id)
+	goods, err := service.NewGoods().GetDetail(id)
+	if err != nil {
+		code = 1
+		msg = "提交失败"
+	} else {
+		code = 0
+		msg = "提交成功"
+	}
 	c.JSON(http.StatusOK, gin.H{
+		"code":  code,
+		"msg":   msg,
 		"lists": goods,
 	})
 }
 
+// @Summary 添加、编辑商品
+// @Description 添加、编辑商品信息
+// @Accept  json
+// @Produce  json
+// @param ApiToken header string true "apitoken验证"
+// @Param  id query string true "商品ID"
+// @Param  name query string true "商品名称"
+// @Param  detail query string true "商品描述"
+// @Success 200 {object} service.Response
+// @Failure 500 {object} service.ResponseError
+// @Router /api/goods_operate [post]
 func Operate(c *gin.Context) {
 	var (
 		code int
@@ -72,6 +137,15 @@ func Operate(c *gin.Context) {
 	})
 }
 
+// @Summary 删除商品
+// @Description 删除商品信息
+// @Accept  json
+// @Produce  json
+// @param ApiToken header string true "apitoken验证"
+// @Param  id query string true "商品ID"
+// @Success 200 {object} service.Response
+// @Failure 500 {object} service.ResponseError
+// @Router /api/goods_del [post]
 func GoodsDel(c *gin.Context) {
 	var (
 		code int
