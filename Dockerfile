@@ -32,14 +32,14 @@ RUN cp -r $PROJECT_DIR/static ./
 RUN cp -r $PROJECT_DIR/.env ./
 
 # 设置Go程序权限
-RUN chmod +x /dist/app
+#RUN chmod +x /dist/app
 
 # 运行阶段
 FROM scratch
 #COPY --from=builder /dist/app /dist/app
 
 # 声明服务端口
-EXPOSE 8088
+EXPOSE 8089
 
 # 容器启动时运行的命令
 ENTRYPOINT ["/dist/app"]
