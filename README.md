@@ -26,9 +26,9 @@
 #### github.com/jiazhoulvke/table2struct
 
 #### swagger使用方法
-编写完注释后，使用以下命令安装swag工具：
+##### 编写完注释后，使用以下命令安装swag工具：
 go get -u github.com/swaggo/swag/cmd/swag
-在项目根目录执行以下命令，使用swag工具生成接口文档数据。
+##### 在项目根目录执行以下命令，使用swag工具生成接口文档数据。
 swag init
 #### 访问：http://localhost:8089/swagger/index.html
 
