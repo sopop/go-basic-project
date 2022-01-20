@@ -49,8 +49,14 @@ const EventHandle = {
                     document.getElementById('db').style.display = 'none';
                     document.getElementById('refsh').style.display = 'block';
                     Swal.fire({
-                        title: 'success',
+                        title: response.data.msg,
                         icon: 'success',
+                        timer: 2000,
+                    })
+                }else{
+                    Swal.fire({
+                        text: response.data.msg,
+                        icon: 'warning',
                         timer: 2000,
                     })
                 }

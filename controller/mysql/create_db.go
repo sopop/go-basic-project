@@ -34,7 +34,11 @@ var (
 
 func CreateMysqlDB(c *gin.Context) {
 	dbTask := &DBTask{}
-	var err error
+	var (
+		err  error
+		code int
+		msg  string
+	)
 	// 连接数据库
 	dataSourceName := strings.Join([]string{dbUser, ":", dbPass,
 		"@tcp(", dbHost, ":", dbPort, ")/mysql?charset=utf8"}, "")
@@ -46,17 +50,20 @@ func CreateMysqlDB(c *gin.Context) {
 	defer dbTask.DBCon.Close()
 	// 创建数据库
 	err = dbTask.createDB()
-	code := 1
+
 	if err != nil {
 		code = 1
+		msg = "操作失败,检查数据库是否连接"
 	} else {
 		copy()
 		appendToFile()
 		service.InitGormDB()
 		code = 0
+		msg = "提交成功"
 	}
 	c.JSON(http.StatusOK, gin.H{
 		"code": code,
+		"msg":  msg,
 	})
 }
 
