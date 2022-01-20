@@ -12,6 +12,7 @@ func InitConf() map[string]string {
 	err := godotenv.Load()
 	if err != nil {
 		log.Println(err)
+		return arr
 	}
 
 	arr["debug"] = os.Getenv("APP_DEBUG")
