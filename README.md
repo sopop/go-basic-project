@@ -33,5 +33,5 @@ go get -u github.com/swaggo/swag/cmd/swag
 swag init
 #### 访问：http://localhost:8089/swagger/index.html
 
-#### 其中Dockerfile文件是docker build时用到
+#### 其中Dockerfile文件是docker build时用到，要根据实际环境优化
 

@@ -21,6 +21,7 @@ func Token() gin.HandlerFunc {
 			} else {
 				// 这里进行验证
 				// code...
+				c.Next()
 			}
 		}
 		c.Next()
