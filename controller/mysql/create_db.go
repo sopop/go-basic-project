@@ -28,6 +28,7 @@ var (
 	dbDriver = configMap["driver"]
 	dbHost   = configMap["host"]
 	dbPort   = configMap["port"]
+	dbName   = configMap["dbname"]
 	dbUser   = configMap["user"]
 	dbPass   = configMap["password"]
 )
@@ -68,21 +69,31 @@ func CreateMysqlDB(c *gin.Context) {
 }
 
 func (d *DBTask) createDB() error {
-	dbName := "CREATE DATABASE IF NOT EXISTS demo_db DEFAULT CHARSET UTF8MB4 COLLATE UTF8MB4_UNICODE_CI;"
-
-	_, err := d.DBCon.Exec(dbName)
+	createDbSql := strings.Join([]string{"CREATE DATABASE IF NOT EXISTS ", dbName,
+		" DEFAULT CHARSET UTF8MB4 COLLATE UTF8MB4_UNICODE_CI;"}, "")
+	_, err := d.DBCon.Exec(createDbSql)
 	if err != nil {
 		log.Println("failed to create databases", err.Error())
 		return err
 	}
-	_, err = d.DBCon.Exec("USE demo_db;")
+
+	useDbSql := strings.Join([]string{"USE ", dbName}, "")
+	_, err = d.DBCon.Exec(useDbSql)
 	if err != nil {
 		log.Println("select database failed")
 		return err
 	}
 
-	tbName := "CREATE TABLE IF NOT EXISTS cms_goods(id int(10) primary key auto_increment,cat_id int(10),name varchar(20),detail varchar(255),create_time int(10),update_time int(10),status tinyint(1)) ENGINE=InnoDB;"
-	_, err = d.DBCon.Exec(tbName)
+	createTbSql := strings.Join([]string{"CREATE TABLE IF NOT EXISTS cms_goods(",
+		"id int(10) primary key auto_increment COMMENT '商品ID',",
+		"cat_id int(10) COMMENT '分类ID',",
+		"name varchar(20) COMMENT '商品名称',",
+		"detail varchar(255) COMMENT '商品详情',",
+		"create_time int(10) COMMENT '创建时间',",
+		"update_time int(10) COMMENT '更新时间',",
+		"status tinyint(1) COMMENT '商品状态'",
+		") ENGINE=InnoDB;"}, "")
+	_, err = d.DBCon.Exec(createTbSql)
 	if err != nil {
 		log.Println("create table  failed:", err.Error())
 		return err
