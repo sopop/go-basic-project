@@ -36,6 +36,7 @@ RUN cp -rf $PROJECT_DIR/.env .
 RUN cp -r $PROJECT_DIR/static .
 RUN cp -r $PROJECT_DIR/view .
 RUN cp -r $PROJECT_DIR/docs .
+RUN cp -r $PROJECT_DIR/temp .
 
 # 运行阶段
 FROM alpine
